@@ -2,7 +2,9 @@
    <img src=".github/logo.svg" width="300"/>
 </p>
 
-# dt money
+---
+
+<br/>
 
 <p align="left">
   <a href="https://www.linkedin.com/in/murilosambuite/"> 
