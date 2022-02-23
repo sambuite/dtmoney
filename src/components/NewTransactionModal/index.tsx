@@ -4,7 +4,7 @@ import incomeImg from 'assets/income.svg';
 import outcomeImg from 'assets/outcome.svg';
 import { Container, TransactionsTypeContainer, RadioBox } from './styles';
 import { FormEvent, useState } from 'react';
-import { api } from 'services/api';
+import { useTransactions } from 'hooks/useTransactions';
 
 Modal.setAppElement('#root');
 
@@ -24,19 +24,21 @@ export function NewTransactionModal({
   const [category, setCategory] = useState('');
   const [type, setType] = useState<TransactionType | ''>('');
 
-  function handleCreateNewTransaction(event: FormEvent) {
+  const { createTransaction } = useTransactions();
+
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
     if (!title || !value || !category || !type) return;
 
-    const data = {
-      title,
-      value,
-      category,
-      type,
-    };
+    await createTransaction({ category, type, title, value });
 
-    api.post('/transactions', data);
+    setTitle('');
+    setValue(0);
+    setCategory('');
+    setType('');
+
+    onRequestClose();
   }
 
   return (
